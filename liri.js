@@ -1,7 +1,9 @@
-var env = require("dotenv").config();
-var moment = require("moment");
-var request = require("request");
-var spotify = require("node-spotify-api");
+require("dotenv").config();
+const moment = require("moment");
+const axios = require("axios");
+const request = require("request");
+const spotify = require("node-spotify-api");
+const fs = require("fs");
 
 var command = process.argv[2];
 var searchWord = process.argv.slice(3).join(" ");
@@ -27,16 +29,27 @@ function go(command, searchWord){
 }
 
 function concert(){
-    console.log(command);
-    console.log(searchWord);
+    // console.log(command);
+    // console.log(searchWord);
+    let band = searchWord.replace(" ","");
+    console.log(band);
+    let URL = "https://rest.bandsintown.com/artists/" + band + "/events?app_id=codingbootcamp";
+    axios.get(URL).then(function(response){
+        console.log(response);
+        response.data.forEach(function (item) {
+        console.log(item.venue.name);
+        let address = `${item.venue.city}, ${item.venue.region}`;
+        console.log(address);
+        console.log(moment(item.datetime).format("MM/DD/YYYY"));
+        console.log("------------------------------------------------------");
+        })
+    })
 }
-// var title = "abettermoviethanrememberthetitans"
-// var normalway = "a movie is: " + title + "."
-// var literal = `a movie is: ${title}.`
+
 
 function movie(){
 
-    var title = searchWord.replace(" ","+");
+    let title = searchWord.replace(" ","+");
     console.log(title);
     request(`http://www.omdbapi.com/?t=${title}&apikey=trilogy`, function(error, response, body) {
 
@@ -45,7 +58,7 @@ function movie(){
 
         // Then we print out the imdbRating
         //console.log(JSON.parse(body));
-        var body = JSON.parse(body)
+        let body = JSON.parse(body)
         // console.log(body);
         console.log(`Title: ${body.Title}`);
         console.log(`Year: ${body.Year}`);
