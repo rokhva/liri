@@ -6,13 +6,19 @@ var spotify = require("node-spotify-api");
 var command = process.argv[2];
 var searchWord = process.argv.slice(3).join(" ");
 
-function go(){
+function go(command, searchWord){
     switch (command) {
         case "concert-this":
-        concert(searchWord);
+            concert(searchWord);
             break;
         case "movie-this":
-        movie(searchWord);    
+            movie(searchWord);    
+            break;
+        case "spotify-this-song":
+            spotify(searchWord);    
+            break;
+        case "do-what-it-says":
+            liriDoThis(searchWord);    
             break;
         default:
             console.log("LIRI doesn't know that")
@@ -40,17 +46,33 @@ function movie(){
         // Then we print out the imdbRating
         //console.log(JSON.parse(body));
         var body = JSON.parse(body)
-        console.log(`The title is: ${body.Title}`)
-        console.log(`The movie is rated ${body.Rated}`)
-        console.log(`The rotten tomatoes score is: ${body.Ratings[1].Value}`);
+        // console.log(body);
+        console.log(`Title: ${body.Title}`);
+        console.log(`Year: ${body.Year}`);
+        console.log(`IMDB Rating: ${body.Ratings[0].Value}`);
+        console.log(`Rotten Tomatoes Rating: ${body.Ratings[1].Value}`);
+        console.log(`Produced In: ${body.Country}`);
+        console.log(`Language: ${body.Language}`);
+        console.log(`Plot: ${body.Plot}`);
+        console.log(`Actors: ${body.Actors}`);
         }
     });
 }
 
-go();
+go(command, searchWord);
 
-var randomthing = `spotify-this-song,"I Want it That Way"`
-var randomthingsArr = randomthing.split(",");
-console.log(randomthingsArr);
-var liriCommand = randomthingsArr[0];
-var liriSearchWord = randomthingsArr[1];
+// var randomthing = `spotify-this-song,"I Want it That Way"`
+// var randomthingsArr = randomthing.split(",");
+// console.log(randomthingsArr);
+// var liriCommand = randomthingsArr[0];
+// var liriSearchWord = randomthingsArr[1];
+
+
+// //look at the read file example
+// function readFile(){
+
+//     var liriCommand = randomthingsArr[0];
+//     var liriSearchWord = randomthingsArr[1];
+//     go(liriCommand,liriSearchWord);
+
+// }
