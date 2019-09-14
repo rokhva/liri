@@ -2,8 +2,9 @@ require("dotenv").config();
 const moment = require("moment");
 const axios = require("axios");
 const request = require("request");
-const spotify = require("node-spotify-api");
+const Spotify = require("node-spotify-api");
 const fs = require("fs");
+let keys = require("./keys.js");
 
 var command = process.argv[2];
 var searchWord = process.argv.slice(3).join(" ");
@@ -70,6 +71,30 @@ function movie(){
         console.log(`Actors: ${body.Actors}`);
         }
     });
+}
+
+function spotify(){
+
+    let spotify = new Spotify({
+        id: keys.spotify.id,
+        secret: keys.spotify.secret
+    });
+    spotify.search({ type: 'track', query: searchWord })
+        .then(function (response) {
+            response.tracks.items.forEach(function (item) {
+                item.artists.forEach(function (artist) {
+                    // console.log(artist.name);
+                    console.log(response);
+                });
+                // console.log(item.name);
+                // console.log(item.href);
+                // console.log(item.album.name);
+                console.log("------------------------------------------------------");
+            });
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
 }
 
 go(command, searchWord);

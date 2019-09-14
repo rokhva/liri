@@ -6,4 +6,4 @@ exports.spotify = {
 };
 
 let keys = require("./keys.js");
-let spotify = new Spotify(keys.spotify);
+// let spotify = new Spotify(keys.spotify);
