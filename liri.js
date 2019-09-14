@@ -42,7 +42,7 @@ function concert(){
         let address = `${item.venue.city}, ${item.venue.region}`;
         console.log(address);
         console.log(moment(item.datetime).format("MM/DD/YYYY"));
-        console.log("------------------------------------------------------");
+        console.log("--------------------------------------------------------------------------------------");
         })
     })
 }
@@ -83,14 +83,15 @@ function spotify(){
         .then(function (response) {
             response.tracks.items.forEach(function (item) {
                 item.artists.forEach(function (artist) {
-                    // console.log(artist.name);
-                    console.log(response);
+                    console.log(`Artist: ${artist.name}`);
                 });
-                // console.log(item.name);
-                // console.log(item.href);
-                // console.log(item.album.name);
-                console.log("------------------------------------------------------");
+                console.log(`Song: ${item.name}`);
+                console.log(`Album: ${item.album.name}`);
+                console.log(`Link: ${item.href}`);
+                console.log("--------------------------------------------------------------------------------------");
+                console.log();
             });
+
         })
         .catch(function (err) {
             console.log(err);
