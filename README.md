@@ -1,4 +1,6 @@
 # liri
+A command line application that retrives movie, concert, and song data.
+
 
 # What Liri Does
 This command line application recongizes the following commands:
