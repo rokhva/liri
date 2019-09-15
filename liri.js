@@ -3,11 +3,12 @@ const moment = require("moment");
 const axios = require("axios");
 const request = require("request");
 const Spotify = require("node-spotify-api");
-const fs = require("fs");
+// const fs = require("fs");
+var fs = require("fs");
 let keys = require("./keys.js");
 
-var command = process.argv[2];
-var searchWord = process.argv.slice(3).join(" ");
+let command = process.argv[2];
+let searchWord = process.argv.slice(3).join(" ");
 
 function go(command, searchWord){
     switch (command) {
@@ -36,7 +37,7 @@ function concert(){
     console.log(band);
     let URL = "https://rest.bandsintown.com/artists/" + band + "/events?app_id=codingbootcamp";
     axios.get(URL).then(function(response){
-        console.log(response);
+        // console.log(response);
         response.data.forEach(function (item) {
         console.log(item.venue.name);
         let address = `${item.venue.city}, ${item.venue.region}`;
@@ -59,8 +60,7 @@ function movie(){
 
         // Then we print out the imdbRating
         //console.log(JSON.parse(body));
-        let body = JSON.parse(body)
-        // console.log(body);
+        let body = JSON.parse(body);
         console.log(`Title: ${body.Title}`);
         console.log(`Year: ${body.Year}`);
         console.log(`IMDB Rating: ${body.Ratings[0].Value}`);
@@ -73,7 +73,7 @@ function movie(){
     });
 }
 
-function spotify(){
+function spotify(searchWord, liriSearchWord){
 
     let spotify = new Spotify({
         id: keys.spotify.id,
@@ -98,20 +98,22 @@ function spotify(){
         });
 }
 
+
+
+function liriDoThis(){
+        fs.readFile("random.txt", function(err, data){
+            if(err) return console.log("error");
+
+            let dataArr = data.toString().split(",");
+            console.log(dataArr);
+            
+            let liriCommand = dataArr[0];
+            let liriSearchWord = dataArr[1].replace(" ","+");;
+
+            go(liriCommand, liriSearchWord);
+        })
+        
+}
+
 go(command, searchWord);
 
-// var randomthing = `spotify-this-song,"I Want it That Way"`
-// var randomthingsArr = randomthing.split(",");
-// console.log(randomthingsArr);
-// var liriCommand = randomthingsArr[0];
-// var liriSearchWord = randomthingsArr[1];
-
-
-// //look at the read file example
-// function readFile(){
-
-//     var liriCommand = randomthingsArr[0];
-//     var liriSearchWord = randomthingsArr[1];
-//     go(liriCommand,liriSearchWord);
-
-// }
