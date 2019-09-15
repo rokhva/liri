@@ -60,7 +60,7 @@ function movie(){
 
         // Then we print out the imdbRating
         //console.log(JSON.parse(body));
-        let body = JSON.parse(body);
+        var body = JSON.parse(body);
         console.log(`Title: ${body.Title}`);
         console.log(`Year: ${body.Year}`);
         console.log(`IMDB Rating: ${body.Ratings[0].Value}`);
