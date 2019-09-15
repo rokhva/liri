@@ -1,6 +1,6 @@
 # liri
 
-#What Liri Does
+# What Liri Does
 This command line application recongizes the following commands:
 
   ```
@@ -37,7 +37,7 @@ The "spotify-this-song" followed by a song name of your choice will return:
 Typing "do-what-it-says" will log a random song
 
 
-#Requirements to run
+# Requirements to run
 * moment
 * axios
 * request
